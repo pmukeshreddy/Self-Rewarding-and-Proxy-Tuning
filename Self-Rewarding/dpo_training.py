@@ -10,6 +10,7 @@ dpo_dataset = Dataset.from_list(preference_pairs)
 dpo_config = DPOConfig(
     output_dir="./m2_checkpoint",
     per_device_train_batch_size=4,
+        beta=0.1,
     num_train_epochs=1,
     learning_rate=1e-6,
     fp16=True,
@@ -27,9 +28,7 @@ trainer = DPOTrainer(
     model=model,
     ref_model=None,
     args=dpo_config,
-    train_dataset=dpo_dataset,
-    tokenizer=tokenizer,
-    beta=0.1
+    train_dataset=dpo_dataset
 )
 trainer.train()
 trainer.save_model("./m2_model")
